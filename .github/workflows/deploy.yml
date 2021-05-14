@@ -47,4 +47,11 @@ jobs:
           ROOT_PASS: ${{ secrets.Root_pass }}
           REGISTRY_USER: ${{ github.actor }}
           REGISTRY_PASS: ${{ secrets.GITHUB_TOKEN }}
+          FFF_CLIENT_ID: ${{ secrets.FFF_CLIENT_ID }}
+          FFF_CLIENT_SECRET: ${{ secrets.FFF_CLIENT_SECRET }}
+          FFF_USERNAME: ${{ secrets.FFF_USERNAME }}
+          FFF_PASSWORD: ${{ secrets.FFF_PASSWORD }}
+          FFF_TOKEN_PASSWORD: ${{ secrets.FFF_TOKEN_PASSWORD }}
+          API_USER: ${{ secrets.API_USER }}
+          API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: cd ansible && ansible-playbook -i inventory --become-method=su --extra-vars "ansible_become_pass=$ROOT_PASS" hofc.yml
