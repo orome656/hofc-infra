@@ -30,7 +30,7 @@ jobs:
           SERVER: ${{ secrets.Server }}
           KEY: ${{ secrets.Key }}
         run: |
-          echo "$KEY" > private_key.ppk && chmod 600 private_key.ppk
+          echo "$KEY" > ~/private_key.ppk && chmod 600 ~/private_key.ppk
           mkdir ~/.ssh && touch ~/.ssh/known_hosts
           ssh-keyscan "$SERVER" >> ~/.ssh/known_hosts
           sed -i "s/<server_host>/$SERVER/g" ./ansible/inventory
