@@ -25,5 +25,16 @@
       name: docker-compose
   - name: Start services
     community.docker.docker_compose:
-      project_src: .
       pull: yes
+      definition:
+        version: '3'
+        services:
+          reverse-proxy:
+            image: traefik:v2.4
+            # Enables the web UI and tells Traefik to listen to docker
+            command: --providers.docker
+            ports:
+              - "8443:443"
+            volumes:
+              # So that Traefik can listen to the Docker events
+              - /var/run/docker.sock:/var/run/docker.sock
