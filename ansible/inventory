@@ -1,0 +1,2 @@
+[server]
+<server_host> ansible_user=<server_user> ansible_ssh_private_key_file=~/private_key.ppk

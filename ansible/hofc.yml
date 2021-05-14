@@ -1,0 +1,27 @@
+---
+- hosts: server
+  tasks:
+  - name: Install Docker
+    become: yes
+    apt:
+      name: docker.io
+      state: present
+  - name: Start service docker, if not started
+    become: yes
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: Install Pip
+    become: yes
+    apt:
+      name: python3-pip
+      state: present
+  - name: install py docker
+    become: yes
+    pip:
+      name: docker
+  - name: Start services
+    community.docker.docker_compose:
+      project_src: .
+      pull: yes
