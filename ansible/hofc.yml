@@ -32,10 +32,30 @@
         services:
           reverse-proxy:
             image: traefik:v2.4
+            restart: unless-stopped
             # Enables the web UI and tells Traefik to listen to docker
-            command: --providers.docker
+            command: 
+              - "--providers.docker=true"
+              - "--providers.docker.exposedbydefault=false"
+              - "--entrypoints.web.address=:443"
             ports:
               - "8443:443"
             volumes:
               # So that Traefik can listen to the Docker events
               - /var/run/docker.sock:/var/run/docker.sock
+          fff-system:
+            image: docker.pkg.github.com/orome656/fff-system-api/fff-system-api:latest
+            restart: unless-stopped
+            labels:
+              - "traefik.enable=true"
+              - "traefik.http.routers.fff-system.rule=Host(`fff-system.api.maladot.ovh`)"
+              - "traefik.http.routers.fff-system.entrypoints=web"
+              - "traefik.http.services.fff-system.loadbalancer.server.port=8500"
+            environment:
+              api_user: "{{ lookup('env','API_USER') }}"
+              api_password: "{{ lookup('env','API_PASSWORD') }}"
+              fff_client_id: "{{ lookup('env','FFF_CLIENT_ID') }}"
+              fff_client_secret: "{{ lookup('env','FFF_CLIENT_SECRET') }}"
+              fff_username: "{{ lookup('env','FFF_USERNAME') }}"
+              fff_password: "{{ lookup('env','FFF_PASSWORD') }}"
+              fff_token_password: "{{ lookup('env','FFF_TOKEN_PASSWORD') }}"
