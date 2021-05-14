@@ -56,7 +56,7 @@
               - "traefik.enable=true"
               - "traefik.http.routers.fff-system.rule=Host(`fff-system.api.maladot.ovh`)"
               - "traefik.http.routers.fff-system.entrypoints=web"
-              - "traefik.http.services.fff-system.loadbalancer.server.port=8500"
+              - "traefik.http.services.fff-system.loadbalancer.server.port=5000"
             environment:
               api_user: "{{ lookup('env','API_USER') }}"
               api_password: "{{ lookup('env','API_PASSWORD') }}"
