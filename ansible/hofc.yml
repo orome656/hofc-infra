@@ -23,6 +23,12 @@
   - name: install py docker compose
     pip:
       name: docker-compose
+  - name: Log into private registry and force re-authorization
+    community.docker.docker_login:
+      registry_url: docker.pkg.github.com
+      username: "{{ lookup('env','REGISTRY_USER') }}"
+      password: "{{ lookup('env','REGISTRY_PASS') }}"
+      reauthorize: yes
   - name: Start services
     community.docker.docker_compose:
       project_name: hofc

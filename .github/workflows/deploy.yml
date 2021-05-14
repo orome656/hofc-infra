@@ -45,4 +45,6 @@ jobs:
       - name: run ansible playbook
         env:
           ROOT_PASS: ${{ secrets.Root_pass }}
+          REGISTRY_USER: ${{ github.actor }}
+          REGISTRY_PASS: ${{ secrets.GITHUB_TOKEN }}
         run: cd ansible && ansible-playbook -i inventory --become-method=su --extra-vars "ansible_become_pass=$ROOT_PASS" hofc.yml
