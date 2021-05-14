@@ -25,6 +25,7 @@
       name: docker-compose
   - name: Start services
     community.docker.docker_compose:
+      project_name: hofc
       pull: yes
       definition:
         version: '3'
