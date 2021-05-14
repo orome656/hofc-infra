@@ -32,8 +32,8 @@ jobs:
           echo "$KEY" > private_key.ppk && chmod 600 private_key.ppk
           mkdir ~/.ssh && touch ~/.ssh/known_hosts
           ssh-keyscan "$SERVER" >> ~/.ssh/known_hosts
-          sed -i 's/<server_host>/$SERVER/g' ansible/inventory
-          sed -i 's/<server_user>/$USERNAME/g' ansible/inventory
+          sed -i 's/<server_host>/$SERVER/g' ./ansible/inventory
+          sed -i 's/<server_user>/$USERNAME/g' ./ansible/inventory
       - name: run ansible playbook
         env:
           ROOT_PASS: ${{ secrets.Root_pass }}
