@@ -38,4 +38,4 @@ jobs:
       - name: run ansible playbook
         env:
           ROOT_PASS: ${{ secrets.Root_pass }}
-        run: cd ansible && ansible-playbook -i inventory --become-method=su --extra-vars "ansible_become_pass=$ROOT_PASS"
+        run: cd ansible && ansible-playbook -i inventory --become-method=su --extra-vars "ansible_become_pass=$ROOT_PASS" hofc.yml
