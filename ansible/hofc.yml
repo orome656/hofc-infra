@@ -47,7 +47,7 @@
               - "--certificatesresolvers.myresolver=true"
               - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
               - "--certificatesresolvers.myresolver.acme.email={{ lookup('env','ACME_EMAIL') }}"
-              - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+              - "--certificatesresolvers.myresolver.acme.storage=acme.json"
               - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=ovh"
             environment:
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_MAIN: api.maladot.ovh
