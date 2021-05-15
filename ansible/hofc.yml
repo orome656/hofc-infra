@@ -43,8 +43,6 @@
               TRAEFIK_PROVIDERS_DOCKER: 'true'
               TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: 'false'
               TRAEFIK_ENTRYPOINTS_WEB_ADDRESS: ":443"
-              TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_MAIN: api.maladot.ovh
-              TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_SANS: "*.api.maladot.ovh"
               TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER: 'false'
               TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_CASERVER: https://acme-staging-v02.api.letsencrypt.org/directory #https://acme-v02.api.letsencrypt.org/directory
               TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_EMAIL: "{{ lookup('env','ACME_EMAIL') }}"
@@ -55,11 +53,19 @@
               OVH_APPLICATION_SECRET: "{{ lookup('env','OVH_APPLICATION_SECRET') }}"
               OVH_CONSUMER_KEY: "{{ lookup('env','OVH_CONSUMER_KEY') }}"
               TRAEFIK_LOG_LEVEL: DEBUG
+            labels:
+              - "traefik.enable=true"
+              - "traefik.http.routers.traefik-secure.tls=true"
+              - "traefik.http.routers.traefik-secure.rule=Host(`traefik.api.maladot.ovh`)"
+              - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
+              - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.api.maladot.ovh"
+              - "traefik.http.routers.traefik-secure.tls.domains[0].sans=api.maladot.ovh"
             ports:
               - "8443:443"
             volumes:
               # So that Traefik can listen to the Docker events
               - /var/run/docker.sock:/var/run/docker.sock
+              - /opt/letsencrypt:/letsencrypt
           fff-system:
             image: docker.pkg.github.com/orome656/fff-system-api/fff-system-api:latest
             restart: unless-stopped
@@ -69,7 +75,6 @@
               - "traefik.http.routers.fff-system.entrypoints=web"
               - "traefik.http.services.fff-system.loadbalancer.server.port=5000"
               - "traefik.http.routers.fff-system.tls=true"
-              - "traefik.http.routers.fff-system.tls.certresolver=myresolver" 
             environment:
               api_user: "{{ lookup('env','API_USER') }}"
               api_password: "{{ lookup('env','API_PASSWORD') }}"
