@@ -44,14 +44,14 @@
               - "--providers.docker=true"
               - "--providers.docker.exposedbydefault=false"
               - "--entrypoints.web.address=:443"
-              - "--certificatesresolvers.myresolver=true"
-              - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-              - "--certificatesresolvers.myresolver.acme.email={{ lookup('env','ACME_EMAIL') }}"
-              - "--certificatesresolvers.myresolver.acme.storage=acme.json"
-              - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=ovh"
             environment:
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_MAIN: api.maladot.ovh
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_SANS: "*.api.maladot.ovh"
+              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER: 'false'
+              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_CASERVER: https://acme-staging-v02.api.letsencrypt.org/directory #https://acme-v02.api.letsencrypt.org/directory
+              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_EMAIL: "{{ lookup('env','ACME_EMAIL') }}"
+              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_STORAGE: acme.json
+              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_DNSCHALLENGE_PROVIDER: ovh
               OVH_ENDPOINT: "ovh-eu"
               OVH_APPLICATION_KEY: "{{ lookup('env','OVH_APPLICATION_KEY') }}"
               OVH_APPLICATION_SECRET: "{{ lookup('env','OVH_APPLICATION_SECRET') }}"
@@ -61,7 +61,6 @@
             volumes:
               # So that Traefik can listen to the Docker events
               - /var/run/docker.sock:/var/run/docker.sock
-              #- /root/acme.json:/letsencrypt/acme.json
           fff-system:
             image: docker.pkg.github.com/orome656/fff-system-api/fff-system-api:latest
             restart: unless-stopped
@@ -70,6 +69,7 @@
               - "traefik.http.routers.fff-system.rule=Host(`fff-system.api.maladot.ovh`)"
               - "traefik.http.routers.fff-system.entrypoints=web"
               - "traefik.http.services.fff-system.loadbalancer.server.port=5000"
+              - "traefik.http.routers.fff-system.tls=true"
               - "traefik.http.routers.fff-system.tls.certresolver=myresolver" 
             environment:
               api_user: "{{ lookup('env','API_USER') }}"
