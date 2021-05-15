@@ -58,6 +58,7 @@
               OVH_APPLICATION_KEY: "{{ lookup('env','OVH_APPLICATION_KEY') }}"
               OVH_APPLICATION_SECRET: "{{ lookup('env','OVH_APPLICATION_SECRET') }}"
               OVH_CONSUMER_KEY: "{{ lookup('env','OVH_CONSUMER_KEY') }}"
+              TRAEFIK_LOG_LEVEL: DEBUG
             ports:
               - "8443:443"
             volumes:
