@@ -29,13 +29,6 @@ jobs:
           USERNAME: ${{ secrets.Username }}
           SERVER: ${{ secrets.Server }}
           KEY: ${{ secrets.Key }}
-          FFF_CLIENT_ID: ${{ secrets.FFF_CLIENT_ID }}
-          FFF_CLIENT_SECRET: ${{ secrets.FFF_CLIENT_SECRET }}
-          FFF_USERNAME: ${{ secrets.FFF_USERNAME }}
-          FFF_PASSWORD: ${{ secrets.FFF_PASSWORD }}
-          FFF_TOKEN_PASSWORD: ${{ secrets.FFF_TOKEN_PASSWORD }}
-          API_USER: ${{ secrets.API_USER }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: |
           echo "$KEY" > ~/private_key.ppk && chmod 600 ~/private_key.ppk
           mkdir ~/.ssh && touch ~/.ssh/known_hosts
@@ -54,4 +47,8 @@ jobs:
           FFF_TOKEN_PASSWORD: ${{ secrets.FFF_TOKEN_PASSWORD }}
           API_USER: ${{ secrets.API_USER }}
           API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          OVH_APPLICATION_KEY: ${{ secrets.OVH_APPLICATION_KEY }}
+          OVH_APPLICATION_SECRET: ${{ secrets.OVH_APPLICATION_SECRET }}
+          OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+          ACME_EMAIL: ${{ secrets.ACME_EMAIL }}
         run: cd ansible && ansible-playbook -i inventory --become-method=su --extra-vars "ansible_become_pass=$ROOT_PASS" hofc.yml
