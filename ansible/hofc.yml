@@ -70,7 +70,7 @@
               - "traefik.http.routers.fff-system.rule=Host(`fff-system.api.maladot.ovh`)"
               - "traefik.http.routers.fff-system.entrypoints=web"
               - "traefik.http.services.fff-system.loadbalancer.server.port=5000"
-              - "traefik.http.routers.fff-system.tls.certresolver=MYRESOLVER" 
+              - "traefik.http.routers.fff-system.tls.certresolver=myresolver" 
             environment:
               api_user: "{{ lookup('env','API_USER') }}"
               api_password: "{{ lookup('env','API_PASSWORD') }}"
