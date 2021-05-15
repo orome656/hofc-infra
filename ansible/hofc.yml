@@ -44,6 +44,8 @@
               - "--providers.docker=true"
               - "--providers.docker.exposedbydefault=false"
               - "--entrypoints.web.address=:443"
+              - "--api.dashboard=true" 
+              - "--api.insecure=true"
             environment:
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_MAIN: api.maladot.ovh
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_SANS: "*.api.maladot.ovh"
@@ -58,6 +60,7 @@
               OVH_CONSUMER_KEY: "{{ lookup('env','OVH_CONSUMER_KEY') }}"
             ports:
               - "8443:443"
+              - "18080:8080"
             volumes:
               # So that Traefik can listen to the Docker events
               - /var/run/docker.sock:/var/run/docker.sock
