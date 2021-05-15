@@ -44,13 +44,14 @@
               - "--providers.docker=true"
               - "--providers.docker.exposedbydefault=false"
               - "--entrypoints.web.address=:443"
+              - "--certificatesresolvers.myresolver=true"
+              - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+              - "--certificatesresolvers.myresolver.acme.email={{ lookup('env','ACME_EMAIL') }}"
+              - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+              - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=ovh"
             environment:
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_MAIN: api.maladot.ovh
               TRAEFIK_ENTRYPOINTS_WEB_HTTP_TLS_DOMAINS_0_SANS: "*.api.maladot.ovh"
-              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_CASERVER: https://acme-staging-v02.api.letsencrypt.org/directory #https://acme-v02.api.letsencrypt.org/directory
-              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_EMAIL: "{{ lookup('env','ACME_EMAIL') }}"
-              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_STORAGE: /letsencrypt/acme.json
-              TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_DNSCHALLENGE_PROVIDER: ovh
               OVH_ENDPOINT: "ovh-eu"
               OVH_APPLICATION_KEY: "{{ lookup('env','OVH_APPLICATION_KEY') }}"
               OVH_APPLICATION_SECRET: "{{ lookup('env','OVH_APPLICATION_SECRET') }}"
