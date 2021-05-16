@@ -83,3 +83,12 @@
               fff_username: "{{ lookup('env','FFF_USERNAME') }}"
               fff_password: "{{ lookup('env','FFF_PASSWORD') }}"
               fff_token_password: "{{ lookup('env','FFF_TOKEN_PASSWORD') }}"
+          hofc-front:
+            image: docker.pkg.github.com/orome656/hofc-front/hofc-front:latest
+            restart: unless-stopped
+            labels:
+              - "traefik.enable=true"
+              - "traefik.http.routers.hofc.rule=Host(`hofc.api.maladot.ovh`)"
+              - "traefik.http.routers.hofc.entrypoints=web"
+              - "traefik.http.services.hofc.loadbalancer.server.port=80"
+              - "traefik.http.routers.hofc.tls=true"
