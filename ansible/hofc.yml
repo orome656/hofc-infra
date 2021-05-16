@@ -16,7 +16,7 @@
     become: yes
     apt:
       name: python3-pip
-      state: present
+      state: present 
   - name: install py docker
     pip:
       name: docker
