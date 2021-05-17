@@ -91,5 +91,5 @@
               - "traefik.http.routers.hofc.entrypoints=web"
               - "traefik.http.services.hofc.loadbalancer.server.port=80"
               - "traefik.http.routers.hofc.tls=true"
-              #- "traefik.http.middlewares.hofc.basicauth.users=antho:{SHA}M+PYH8wxccvBdg2zq7sBbP6c4WQ="
-              #- "traefik.http.routers.hofc.middlewares=hofc"
+              - "traefik.http.middlewares.hofc.basicauth.users=antho:{SHA}M+PYH8wxccvBdg2zq7sBbP6c4WQ="
+              - "traefik.http.routers.hofc.middlewares=hofc"
