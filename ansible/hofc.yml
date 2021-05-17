@@ -52,14 +52,13 @@
               OVH_APPLICATION_KEY: "{{ lookup('env','OVH_APPLICATION_KEY') }}"
               OVH_APPLICATION_SECRET: "{{ lookup('env','OVH_APPLICATION_SECRET') }}"
               OVH_CONSUMER_KEY: "{{ lookup('env','OVH_CONSUMER_KEY') }}"
-              TRAEFIK_LOG_LEVEL: DEBUG
             labels:
               - "traefik.enable=true"
               - "traefik.http.routers.traefik-secure.tls=true"
-              - "traefik.http.routers.traefik-secure.rule=Host(`traefik.api.maladot.ovh`)"
+              - "traefik.http.routers.traefik-secure.rule=Host(`traefik.hofc.maladot-developer.ovh`)"
               - "traefik.http.routers.traefik-secure.tls.certresolver=myresolver"
-              - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.api.maladot.ovh"
-              - "traefik.http.routers.traefik-secure.tls.domains[0].sans=api.maladot.ovh"
+              - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.hofc.maladot-developer.ovh"
+              - "traefik.http.routers.traefik-secure.tls.domains[0].sans=hofc.maladot-developer.ovh"
             ports:
               - "8443:443"
             volumes:
@@ -71,7 +70,7 @@
             restart: unless-stopped
             labels:
               - "traefik.enable=true"
-              - "traefik.http.routers.fff-system.rule=Host(`fff-system.api.maladot.ovh`)"
+              - "traefik.http.routers.fff-system.rule=Host(`fff-system.hofc.maladot-developer.ovh`)"
               - "traefik.http.routers.fff-system.entrypoints=web"
               - "traefik.http.services.fff-system.loadbalancer.server.port=5000"
               - "traefik.http.routers.fff-system.tls=true"
@@ -88,9 +87,9 @@
             restart: unless-stopped
             labels:
               - "traefik.enable=true"
-              - "traefik.http.routers.hofc.rule=Host(`hofc.api.maladot.ovh`)"
+              - "traefik.http.routers.hofc.rule=Host(`front.hofc.maladot-developer.ovh`)"
               - "traefik.http.routers.hofc.entrypoints=web"
               - "traefik.http.services.hofc.loadbalancer.server.port=80"
               - "traefik.http.routers.hofc.tls=true"
-              - "traefik.http.middlewares.hofc.basicauth.users=antho:{SHA}M+PYH8wxccvBdg2zq7sBbP6c4WQ="
+              #- "traefik.http.middlewares.hofc.basicauth.users=antho:{SHA}M+PYH8wxccvBdg2zq7sBbP6c4WQ="
               - "traefik.http.routers.hofc.middlewares=hofc"
