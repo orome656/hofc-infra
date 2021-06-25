@@ -100,5 +100,5 @@
               - "traefik.enable=true"
               - "traefik.http.routers.hofc-official-system.rule=Host(`hofc-official-system.hofc.maladot-developer.ovh`)"
               - "traefik.http.routers.hofc-official-system.entrypoints=web"
-              - "traefik.http.services.hofc-official-system.loadbalancer.server.port=5000"
+              - "traefik.http.services.hofc-official-system.loadbalancer.server.port=80"
               - "traefik.http.routers.hofc-official-system.tls=true"
