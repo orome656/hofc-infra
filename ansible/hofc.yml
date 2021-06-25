@@ -93,3 +93,12 @@
               - "traefik.http.routers.hofc.tls=true"
               #- "traefik.http.middlewares.hofc.basicauth.users=antho:{SHA}M+PYH8wxccvBdg2zq7sBbP6c4WQ="
               #- "traefik.http.routers.hofc.middlewares=hofc"
+          hofc-official-system:
+            image: docker.pkg.github.com/orome656/hofc-official-system-api/hofc-official-system-api:latest
+            restart: unless-stopped
+            labels:
+              - "traefik.enable=true"
+              - "traefik.http.routers.hofc-official-system.rule=Host(`hofc-official-system.hofc.maladot-developer.ovh`)"
+              - "traefik.http.routers.hofc-official-system.entrypoints=web"
+              - "traefik.http.services.hofc-official-system.loadbalancer.server.port=5000"
+              - "traefik.http.routers.hofc-official-system.tls=true"
